@@ -470,7 +470,7 @@
 
         // Fungsi untuk memuat semua data absensi dari Supabase
         async function loadAbsensiFromSupabase() {
-            const { data, error } = await supabase.from('absensi').select('*').order('created_at', { ascending: false });
+            const { data, error } = await supabaseClient.from('absensi').select('*').order('created_at', { ascending: false });
             if (error) {
                 console.error('Gagal memuat data absensi:', error);
                 return [];
@@ -538,11 +538,11 @@
 
         async function toggleStatusAbsensi() {
             // Ambil status saat ini dari app_settings
-            let { data, error } = await supabase.from('app_settings').select('value').eq('key', 'status_absen_XIF7').single();
+            let { data, error } = await supabaseClient.from('app_settings').select('value').eq('key', 'status_absen_XIF7').single();
             let isClosed = data && data.value === 'ditutup';
             
             let newStatus = isClosed ? 'dibuka' : 'ditutup';
-            const { error: upsertError } = await supabase.from('app_settings').upsert({ key: 'status_absen_XIF7', value: newStatus }, { onConflict: 'key' });
+            const { error: upsertError } = await supabaseClient.from('app_settings').upsert({ key: 'status_absen_XIF7', value: newStatus }, { onConflict: 'key' });
             if (upsertError) {
                 console.error('Gagal update status:', upsertError);
                 Swal.fire({title: 'Gagal', text: 'Gagal memperbarui status.', icon: 'error', timer:2500, timerProgressBar:true, showConfirmButton:false});
@@ -558,7 +558,7 @@
         }
 
         async function updateTeksTombolBukaTutup() {
-            let { data, error } = await supabase.from('app_settings').select('value').eq('key', 'status_absen_XIF7').single();
+            let { data, error } = await supabaseClient.from('app_settings').select('value').eq('key', 'status_absen_XIF7').single();
             let isClosed = data && data.value === 'ditutup';
             let btn = document.getElementById('btn-toggle-absen');
             if(isClosed) { btn.innerText = "Buka Absensi"; btn.style.background = "#10b981"; btn.style.color = "#fff"; } 
@@ -566,7 +566,7 @@
         }
 
         async function cekDanBukaAbsen() {
-            let { data, error } = await supabase.from('app_settings').select('value').eq('key', 'status_absen_XIF7').single();
+            let { data, error } = await supabaseClient.from('app_settings').select('value').eq('key', 'status_absen_XIF7').single();
             let isClosed = data && data.value === 'ditutup';
             if(isClosed) Swal.fire({title:'Tidak bisa absen', text:'Absensi telah ditutup.', icon:'error', timer: 3000, timerProgressBar: true, showConfirmButton: false});
             else switchPanel('panel-absen');
@@ -727,7 +727,7 @@
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     // Hapus data dari Supabase berdasarkan id
-                    const { error } = await supabase.from('absensi').delete().eq('id', id);
+                    const { error } = await supabaseClient.from('absensi').delete().eq('id', id);
                     if (error) {
                         Swal.fire({title:'Gagal', text:'Gagal menghapus data.', icon:'error', timer:2000, timerProgressBar:true, showConfirmButton:false});
                         return;
@@ -744,7 +744,7 @@
                 icon: 'error', showCancelButton: true, confirmButtonColor: '#ef4444', cancelButtonColor: '#94a3b8', confirmButtonText: 'Ya!'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    const { error } = await supabase.from('absensi').delete().neq('id', 0); // hapus semua
+                    const { error } = await supabaseClient.from('absensi').delete().neq('id', 0); // hapus semua
                     if (error) {
                         Swal.fire({title:'Gagal', text:'Gagal mereset data.', icon:'error', timer:2500, timerProgressBar:true, showConfirmButton:false});
                         return;
@@ -995,7 +995,7 @@
                 lock_key: `absen_XIF7_${nama}_${hari}_${mapel}`
             };
 
-            const { error: insertError } = await supabase.from('absensi').insert(payload);
+            const { error: insertError } = await supabaseClient.from('absensi').insert(payload);
             if (insertError) {
                 console.error('Gagal menyimpan absen:', insertError);
                 Swal.fire({title:'Gagal', text:'Gagal menyimpan data absensi.', icon:'error', timer:2500, timerProgressBar:true, showConfirmButton:false});
