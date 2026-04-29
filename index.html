@@ -440,7 +440,7 @@
         // --- SUPABASE SETUP ---
         const supabaseUrl = 'https://hwljckozqobryksiliip.supabase.co';
         const supabaseAnonKey = 'sb_publishable_-dgnPVhhb0TefZ0y6KN_GA_2Ii5XiiL';
-        supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+        const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
         // --- 1. DATA JADWAL & NAMA ---
         const jadwalPelajaran = {
@@ -470,7 +470,7 @@
 
         // Fungsi untuk memuat semua data absensi dari Supabase
         async function loadAbsensiFromSupabase() {
-            const { data, error } = await supabaseClient.from('loadAbsensiFromSupabase').select('*').order('created_at', { ascending: false });
+            const { data, error } = await supabase.from('absensi').select('*').order('created_at', { ascending: false });
             if (error) {
                 console.error('Gagal memuat data absensi:', error);
                 return [];
