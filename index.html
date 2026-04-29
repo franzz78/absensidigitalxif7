@@ -834,8 +834,8 @@
             // Jika hari dan mapel sudah dipilih, cek status absen dari Supabase
             let sudahAbsenMap = new Set();
             if (hari && mapel) {
-                // Ambil semua record untuk hari dan mapel ini
-                const { data, error } = await supabase
+                
+                const { data, error } = await supabaseClient
                     .from('absensi')
                     .select('nama')
                     .eq('hari', hari)
