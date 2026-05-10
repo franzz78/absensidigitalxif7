@@ -1,6 +1,6 @@
 {
   "name": "Absensi Digital SMAN 1 Lemahabang",
-  "short_name": "Absensi Digital",
+  "short_name": "Absensi Digital Smansala",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#f8fafc",
@@ -8,12 +8,12 @@
   "description": "Aplikasi absensi digital untuk siswa kelas XIF1-XIF10",
   "icons": [
     {
-      "src": "https://hwljckozqobryksiliip.supabase.co/storage/v1/object/public/foto-absensi/SMANSALA.pngg",
+      "src": "https://github.com/endief/absensidigitalsmansala/blob/fd79643e6c6715f8132f39d6ae59c3a80af79dcc/images/SMANSALA.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://hwljckozqobryksiliip.supabase.co/storage/v1/object/public/foto-absensi/SMANSALA.png",
+      "src": "https://github.com/endief/absensidigitalsmansala/blob/fd79643e6c6715f8132f39d6ae59c3a80af79dcc/images/SMANSALA.png",
       "sizes": "512x512",
       "type": "image/png"
     }
